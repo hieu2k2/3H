@@ -1,0 +1,31 @@
+.logo, .banner, .content, .footer, .product, .tab-list {
+    border: 1px solid;
+    border-color: #a9acad;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.banner, .logo{
+    height: 200px;
+}
+
+.footer {
+    height: 50px;
+}
+
+.tab {
+    cursor: pointer;
+    color: blue;
+}
+
+.main{
+    height: 100vh;
+}
+.add-all{
+    text-align: center;
+    border: 2px solid #0ddafa;
+    background-color: #2cc1c1;
+     border-radius : 5px  ;
+     cursor: pointer;
+     color : rgb(0, 72, 255); 
+     margin-bottom: 20px ;
+}
