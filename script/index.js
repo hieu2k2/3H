@@ -8,7 +8,7 @@ function loadHomeContent() {
   let html = `
         <div class="col-12" >
         <h2 style="text-align: center; margin-top: 20px" >Product List</h2>
-        
+
         <h4 class="add-all" onclick="showAddProductForm()">Add new product</h4>
             <table class="table table-striped table-bordered">
               <thead style="background-color: #2cc1c1 !important;">
@@ -19,10 +19,10 @@ function loadHomeContent() {
                   <th scope="col">Brand</th>
                   <th scope="col">Price</th>
                   <th scope="col">Short Description</th>
-                  <th style="width: 15%" scope="col">Action</th>
+                  <th style="width: 17%" scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody id="list-product">      
+              <tbody id="list-product">
               </tbody>
             </table>
         </div>`;
@@ -45,7 +45,7 @@ function loadListProduct() {
             <td>${data.content[i].id}</td>
             <th scope="row">
                 <img src="${data.content[i].image}" alt="" style="width: 100px">
-            </th>                    
+            </th>
             <td>${data.content[i].name}</td>
             <td>${data.content[i].brand?.name}</td>
             <td>${data.content[i].price}</td>
@@ -80,7 +80,7 @@ function showEditProduct(id) {
     },
     url: API + "/products/" + id,
     success: function (data) {
-      console.log(data)
+      console.log(data, 'asd')
       let html =
         "<div class='offset-3 col-6 mb-3'><h2 style=\"text-align: center\">Edit</h2>" +
         "<form id='frm-product'>" +
@@ -130,36 +130,36 @@ function showEditProduct(id) {
         "'>\n" +
         "    </div>\n" +
         "  </div>\n" +
-      '  <div class="form-group row">\n' +
-      '    <label for="score" class="col-sm-4 col-form-label">New Image</label>\n' +
-      '    <div class="col-sm-8">\n' +
-      '      <input type="file" class="" name="file" id="file">\n' +
-      "    </div>\n" +
-      "  </div>\n" +
-      '    <div class="form-group row">\n' +
-      '    <label for="brand" class="col-sm-4 col-form-label">Brand</label>\n' +
-      '    <div class="col-sm-8" id="product-brand">\n' +
-      "    </div>\n" +
-      "  </div>\n" +
-      '  <div class="form-group row">\n' +
-      '    <label for="category" class="col-sm-4 col-form-label">Category</label>\n' +
-      '    <div class="col-sm-8" id="product-category">\n' +
-      "    </div>\n" +
-      "  </div>\n" +
-      '  <div class="form-group row">\n' +
-      '    <label for="color" class="col-sm-4 col-form-label">Color</label>\n' +
-      '    <div class="col-sm-8" id="product-color">\n' +
-      "    </div>\n" +
-      "  </div>\n" +
-      '  <div class="form-group row">\n' +
-      '    <label for="size" class="col-sm-4 col-form-label">Size</label>\n' +
-      '    <div class="col-sm-8" id="product-size">\n' +
-      "    </div>\n" +
-      "  </div>\n" +
+        '  <div class="form-group row">\n' +
+        '    <label for="score" class="col-sm-4 col-form-label">New Image</label>\n' +
+        '    <div class="col-sm-8">\n' +
+        '      <input type="file" class="" name="file" id="file">\n' +
+        "    </div>\n" +
+        "  </div>\n" +
+        '    <div class="form-group row">\n' +
+        '    <label for="brand" class="col-sm-4 col-form-label">Brand</label>\n' +
+        '    <div class="col-sm-8" id="product-brand">\n' +
+        "    </div>\n" +
+        "  </div>\n" +
+        '  <div class="form-group row">\n' +
+        '    <label for="category" class="col-sm-4 col-form-label">Category</label>\n' +
+        '    <div class="col-sm-8" id="product-category">\n' +
+        "    </div>\n" +
+        "  </div>\n" +
+        '  <div class="form-group row">\n' +
+        '    <label for="color" class="col-sm-4 col-form-label">Color</label>\n' +
+        '    <div class="col-sm-8" id="product-color">\n' +
+        "    </div>\n" +
+        "  </div>\n" +
+        '  <div class="form-group row">\n' +
+        '    <label for="size" class="col-sm-4 col-form-label">Size</label>\n' +
+        '    <div class="col-sm-8" id="product-size">\n' +
+        "    </div>\n" +
+        "  </div>\n" +
         '  <div class="row">\n' +
         '    <div class="offset-5 col-sm-2">\n' +
         '       <button class="btn btn-outline-primary mt-2" type=\'button\' onclick="saveProduct(' +
-        data?.product?.id + 
+        data?.product?.id +
         ", '" +
         data?.product?.code +
         "')\">Change</button>" +
@@ -167,80 +167,81 @@ function showEditProduct(id) {
         "  </div>\n" +
         "</form>" +
         "</div>";
-        document.getElementById("content").innerHTML = html;
-        $.ajax({
-          type: "GET",
-          headers: {
-            "Authorization": "Basic " + btoa(username + ":" + password) 
-          },
-          url: API + "/brands?size=100",
-          success: function (data) {
-            let html = `<select id="brands-edit" value="` + data?.product?.brand?.id + ` title='Choose one...'>`;        
-            for (let i = 0; i < data.content.length; i++) {
-              if(data.content[i].state == true){
-                html += `<option name="brands"  value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-              }
-            }        
-            html += `</select>`;
-            document.getElementById("product-brand").innerHTML = html;
-            $('select').selectpicker();
-          },
-        });
-        $.ajax({
-          type: "GET",
-          headers: {
-            "Authorization": "Basic " + btoa(username + ":" + password)
-          },
-          url: API + "/categories?size=100",
-          success: function (data) {
-            let html = `<select id="categorys-edit" value="` + data?.product?.category?.id + `  title='Choose one...'>`;        
-            for (let i = 0; i < data.content.length; i++) {
-              if(data.content[i].state == true){
-                html += `<option name="categorys" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-              }
-            }        
-            html += `</select>`;
-            document.getElementById("product-category").innerHTML = html;
-            $('select').selectpicker();
-          },
-        });
-        $.ajax({
-          type: "GET",
-          headers: {
-            "Authorization": "Basic " + btoa(username + ":" + password)
-          },
-          url: API + "/colors?size=100",
-          success: function (data) {
-            let html = `<select class="selectpicker" id="colors-edit" multiple  data-live-search="true" title='Choose one...'>`;
-            for (let i = 0; i < data.content.length; i++) {
-              if(data.content[i].state == true){
-                html += `<option name="colors" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-              }
-            }   
-            html += `</select>`;
-            document.getElementById("product-color").innerHTML = html;
-            $('select').selectpicker();
-          },
-        });
-        $.ajax({
-          type: "GET",
-          headers: {
-            "Authorization": "Basic " + btoa(username + ":" + password)
-          },
-          url: API + "/sizes?size=100",
-          success: function (data) {
-            let html = `<select class="selectpicker" id="sizes-edit" multiple  data-live-search="true" title='Choose one...'>`;
-            
-            for (let i = 0; i < data.content.length; i++) {
-              if(data.content[i].state == true){
-                html += `<option name="sizes" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-              }
-            }        
-            html += `</select>`;
-            document.getElementById("product-size").innerHTML = html;
-            $('select').selectpicker();
-          },
-        });
+      document.getElementById("content").innerHTML = html;
+      $.ajax({
+        type: "GET",
+        headers: {
+          "Authorization": "Basic " + btoa(username + ":" + password)
+        },
+        url: API + "/brands?size=100",
+        success: function (dataBrand) {
+          let html = `<select id="brands-edit"` + dataBrand?.product?.brand?.id + ` title='Choose one...'>`;
+          for (let i = 0; i < dataBrand.content.length; i++) {
+            if (dataBrand.content[i].state == true) {
+              html += `<option name="brands" value="${dataBrand.content[i].id}" ${dataBrand.content[i].id == data.product.brand.id ? 'selected' : ''}> ${dataBrand.content[i].name}</option>`;
+            }
+          }
+          html += `</select>`;
+          document.getElementById("product-brand").innerHTML = html;
+          $('select').selectpicker();
+        },
+      });
+      $.ajax({
+        type: "GET",
+        headers: {
+          "Authorization": "Basic " + btoa(username + ":" + password)
+        },
+        url: API + "/categories?size=100",
+        success: function (dataCategory) {
+          console.log(dataCategory, data);
+          let html = `<select id="categorys-edit" value="` + dataCategory?.product?.category?.id + `  title='Choose one...'>`;
+          for (let i = 0; i < dataCategory.content.length; i++) {
+            if (dataCategory.content[i].state == true) {
+              html += `<option name="categorys" value="${dataCategory.content[i].id}" ${dataCategory.content[i].id == data.product.category.id ? 'selected' : ''}> ${dataCategory.content[i].name}</option>`;
+            }
+          }
+          html += `</select>`;
+          document.getElementById("product-category").innerHTML = html;
+          $('select').selectpicker();
+        },
+      });
+      $.ajax({
+        type: "GET",
+        headers: {
+          "Authorization": "Basic " + btoa(username + ":" + password)
+        },
+        url: API + "/colors?size=100",
+        success: function (data) {
+          let html = `<select class="selectpicker" id="colors-edit" multiple  data-live-search="true" title='Choose one...'>`;
+          for (let i = 0; i < data.content.length; i++) {
+            if (data.content[i].state == true) {
+              html += `<option name="colors" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
+            }
+          }
+          html += `</select>`;
+          document.getElementById("product-color").innerHTML = html;
+          $('select').selectpicker();
+        },
+      });
+      $.ajax({
+        type: "GET",
+        headers: {
+          "Authorization": "Basic " + btoa(username + ":" + password)
+        },
+        url: API + "/sizes?size=100",
+        success: function (data) {
+          let html = `<select class="selectpicker" id="sizes-edit" multiple  data-live-search="true" title='Choose one...'>`;
+
+          for (let i = 0; i < data.content.length; i++) {
+            if (data.content[i].state == true) {
+              html += `<option name="sizes" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
+            }
+          }
+          html += `</select>`;
+          document.getElementById("product-size").innerHTML = html;
+          $('select').selectpicker();
+        },
+      });
     },
   });
 }
@@ -314,27 +315,30 @@ function showDetail(id) {
         '    <label for="score" class="col-sm-4 col-form-label">Category</label>\n' +
         '    <div class="col-sm-8">\n' +
         '      <input type="text" class="form-control" name="Category" value=\'' +
-        data?.product?.category.name + 
+        data?.product?.category.name +
         "'>\n" +
         "    </div>\n" +
         "  </div>\n" +
         '  <div class="form-group row">\n' +
         '    <label for="score" class="col-sm-4 col-form-label">Size</label>\n' +
         '    <div class="col-sm-8">\n' +
-        '      <input type="text" class="form-control" name="Size" value=\'' +
-        data?.size?.name + 
-        "'>\n" +
+        ' <select class="form-control"> ' +
+        (data?.product?.productSizes && data?.product?.productSizes.map(x => `<option>${x.size.name}</option>`)) +
+
+        ' </select> ' +
         "    </div>\n" +
         "  </div>\n" +
         '  <div class="form-group row">\n' +
         '    <label for="score" class="col-sm-4 col-form-label">Color</label>\n' +
         '    <div class="col-sm-8">\n' +
-        '      <input type="text" class="form-control" name="Content" value=\'' +
-        data?.productColors?.product?.color.name + 
-        "'>\n" +
+        ' <select class="form-control"> ' +
+        (data?.product?.productColors && data?.product?.productColors.map(x => `<option>${x.color.name}</option>`)) +
+
+        ' </select> ' +
         "</form>" +
         "</div>";
-        document.getElementById("content").innerHTML = html;
+      console.log((data?.product?.productSizes[0] && data?.product?.productSizes[0].size.name));
+      document.getElementById("content").innerHTML = html;
     },
   });
 }
@@ -343,26 +347,25 @@ function saveProduct(id, code) {
   var formData = new FormData($("#frm-product")[0]);
   var brands = $('#brands-edit').val();
   var categorys = $('#categorys-edit').val();
-  var colors = $('#colors-edit').val().map(i=>Number(i));
-  var sizes = $('#sizes-edit').val().map(i=>Number(i));
+  var colors = $('#colors-edit').val().map(i => Number(i));
+  var sizes = $('#sizes-edit').val().map(i => Number(i));
   formData.append("brand", brands);
   formData.append("category", categorys);
   formData.append("colors", colors);
-  formData.append("sizes", sizes);  
+  formData.append("sizes", sizes);
   var file = $('#file').val()
-  if (brands == ""){
+  if (brands == "") {
     alert("Vui lòng chọn thương hiệu")
   }
-  if (categorys == ""){
+  if (categorys == "") {
     alert("Vui lòng chọn thể loại")
   }
-  if(file === null || file =="" || file == "undefined")
-  {
+  if (file === null || file == "" || file == "undefined") {
     formData.delete("file")
   }
 
   $.ajax({
-    type: "PUT", 
+    type: "PUT",
     url: API + "/products",
     headers: {
       "Authorization": "Basic " + btoa(username + ":" + password)
@@ -446,106 +449,104 @@ function showAddProductForm() {
     "  </div>\n" +
     "</form>" +
     "</div>";
-    document.getElementById("content").innerHTML = html;
-    $.ajax({
-      type: "GET",
-      headers: {
-        "Authorization": "Basic " + btoa(username + ":" + password)
-      },
-      url: API + "/brands?size=100",
-      success: function (data) {
-        let html = `<select required id="brands" title='Choose one...'>`;        
-        for (let i = 0; i < data.content.length; i++) {
-          if(data.content[i].state == true){
-            html += `<option name="brands"  value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-          }
-        }        
-        html += `</select>`;
-        document.getElementById("product-brand").innerHTML = html;
-        $('select').selectpicker();
-      },
-    });
-    $.ajax({
-      type: "GET",
-      headers: {
-        "Authorization": "Basic " + btoa(username + ":" + password)
-      },
-      url: API + "/categories?size=100",
-      success: function (data) {
-        let html = `<select id="categorys" required title='Choose one...'>`;        
-        for (let i = 0; i < data.content.length; i++) {
-          if(data.content[i].state == true){
-            html += `<option name="categorys" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-          }
-        }        
-        html += `</select>`;
-        document.getElementById("product-category").innerHTML = html;
-        $('select').selectpicker();
-      },
-    });
-    $.ajax({
-      type: "GET",
-      headers: {
-        "Authorization": "Basic " + btoa(username + ":" + password)
-      },
-      url: API + "/colors?size=100",
-      success: function (data) {
-        let html = `<select class="selectpicker" id="colors" multiple  data-live-search="true" title='Choose one...'>`;
-        for (let i = 0; i < data.content.length; i++) {
-          if(data.content[i].state == true){
-            html += `<option name="colors" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-          }
-        }   
-        html += `</select>`;
-        document.getElementById("product-color").innerHTML = html;
-        $('select').selectpicker();
-      },
-    });
-    $.ajax({
-      type: "GET",
-      headers: {
-        "Authorization": "Basic " + btoa(username + ":" + password)
-      },
-      url: API + "/sizes?size=100",
-      success: function (data) {
-        let html = `<select class="selectpicker" id="sizes" multiple  data-live-search="true" title='Choose one...'>`;
-        
-        for (let i = 0; i < data.content.length; i++) {
-          if(data.content[i].state == true){
-            html += `<option name="sizes" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
-          }
-        }        
-        html += `</select>`;
-        document.getElementById("product-size").innerHTML = html;
-        $('select').selectpicker();
-      },
-    });
+  document.getElementById("content").innerHTML = html;
+  $.ajax({
+    type: "GET",
+    headers: {
+      "Authorization": "Basic " + btoa(username + ":" + password)
+    },
+    url: API + "/brands?size=100",
+    success: function (data) {
+      let html = `<select required id="brands" title='Choose one...'>`;
+      for (let i = 0; i < data.content.length; i++) {
+        if (data.content[i].state == true) {
+          html += `<option name="brands"  value="${data.content[i].id}"> ${data.content[i].name}</option>`;
+        }
+      }
+      html += `</select>`;
+      document.getElementById("product-brand").innerHTML = html;
+      $('select').selectpicker();
+    },
+  });
+  $.ajax({
+    type: "GET",
+    headers: {
+      "Authorization": "Basic " + btoa(username + ":" + password)
+    },
+    url: API + "/categories?size=100",
+    success: function (data) {
+      let html = `<select id="categorys" required title='Choose one...'>`;
+      for (let i = 0; i < data.content.length; i++) {
+        if (data.content[i].state == true) {
+          html += `<option name="categorys" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
+        }
+      }
+      html += `</select>`;
+      document.getElementById("product-category").innerHTML = html;
+      $('select').selectpicker();
+    },
+  });
+  $.ajax({
+    type: "GET",
+    headers: {
+      "Authorization": "Basic " + btoa(username + ":" + password)
+    },
+    url: API + "/colors?size=100",
+    success: function (data) {
+      let html = `<select class="selectpicker" id="colors" multiple  data-live-search="true" title='Choose one...'>`;
+      for (let i = 0; i < data.content.length; i++) {
+        if (data.content[i].state == true) {
+          html += `<option name="colors" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
+        }
+      }
+      html += `</select>`;
+      document.getElementById("product-color").innerHTML = html;
+      $('select').selectpicker();
+    },
+  });
+  $.ajax({
+    type: "GET",
+    headers: {
+      "Authorization": "Basic " + btoa(username + ":" + password)
+    },
+    url: API + "/sizes?size=100",
+    success: function (data) {
+      let html = `<select class="selectpicker" id="sizes" multiple  data-live-search="true" title='Choose one...'>`;
+
+      for (let i = 0; i < data.content.length; i++) {
+        if (data.content[i].state == true) {
+          html += `<option name="sizes" value="${data.content[i].id}"> ${data.content[i].name}</option>`;
+        }
+      }
+      html += `</select>`;
+      document.getElementById("product-size").innerHTML = html;
+      $('select').selectpicker();
+    },
+  });
 }
 
 function addProduct() {
   var formData = new FormData($("#frm-product")[0]);
   var brands = $('#brands').val();
   var categorys = $('#categorys').val();
-  var colors = $('#colors').val().map(i=>Number(i));
-  var sizes = $('#sizes').val().map(i=>Number(i));
+  var colors = $('#colors').val().map(i => Number(i));
+  var sizes = $('#sizes').val().map(i => Number(i));
   formData.append("brand", brands);
   formData.append("category", categorys);
   formData.append("colors", colors);
   formData.append("sizes", sizes);
   var file = $('#file').val()
-  if (brands == ""){
+  if (brands == "") {
     alert("Vui lòng chọn thương hiệu")
   }
-  if (categorys == ""){
+  if (categorys == "") {
     alert("Vui lòng chọn thể loại")
   }
-  if(file === null || file =="" || file == "undefined")
-  {
+  if (file === null || file == "" || file == "undefined") {
     formData.delete("file")
   }
-  for (var pair of formData.entries())
-  {
-   console.log(pair[0]+ ', '+ pair[1]); 
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
   }
   $.ajax({
     type: "POST",
@@ -591,7 +592,7 @@ function loadCategoryManagerContent() {
   let html = `
         <div class="col-12" >
         <h2 style="text-align: center; margin-top: 20px" >Category List</h2>
-        
+
         <h4 class="add-all" onclick="showAddFormCategory()">Add new category</h4>
             <table class="table table-striped table-bordered">
               <thead style="background-color: #2cc1c1 !important;">
@@ -602,7 +603,7 @@ function loadCategoryManagerContent() {
                 </tr>
               </thead>
               <tbody id="list-category">
-               
+
               </tbody>
             </table>
         </div>`;
@@ -627,9 +628,8 @@ function loadListCategory() {
               <td>
               <button class="btn btn-outline-secondary mr-2" onclick="showEditCategory('${data.content[i].id}')">Edit
               </button>
-              <Button class="btn btn-outline-danger" onclick="deleteCategory(${
-                data.content[i].id
-              },'${data.content[i].name}')">Del</Button></td></tr>`;
+              <Button class="btn btn-outline-danger" onclick="deleteCategory(${data.content[i].id
+            },'${data.content[i].name}')">Del</Button></td></tr>`;
         }
       }
       document.getElementById("list-category").innerHTML = html1;
@@ -643,7 +643,7 @@ function loadListCategory() {
 function addCategory() {
   let formData = $("#frm-category").serializeArray();
   var jsonObj = {};
-  $.map( formData, function( n, i ) {
+  $.map(formData, function (n, i) {
     jsonObj[n.name] = n.value;
   });
   console.log(formData)
@@ -678,9 +678,9 @@ function showEditCategory(id) {
         '    <label for="name" class="col-sm-4 col-form-label">Name</label>\n' +
         '    <div class="col-sm-8">\n' +
         '      <input type="hidden" class="form-control" name="id" value=\'' +
-        data?.id +"'>\n" +
+        data?.id + "'>\n" +
         '      <input type="text" class="form-control" name="name" value=\'' +
-        data?.name +"'>\n" +
+        data?.name + "'>\n" +
         "    </div>\n" +
         "  </div>\n" +
         '  <div class="form-group row">\n' +
@@ -691,16 +691,16 @@ function showEditCategory(id) {
         "  </div>\n" +
         "</form>" +
         "</div>";
-        document.getElementById("content").innerHTML = html;
+      document.getElementById("content").innerHTML = html;
     },
   });
 }
 function editCategory() {
   let formData = $("#frm-category").serializeArray();
   var jsonObj = {};
-  $.map( formData, function( n, i ) {
-     jsonObj[n.name] = n.value;
-     jsonObj[n.name] = n.value;
+  $.map(formData, function (n, i) {
+    jsonObj[n.name] = n.value;
+    jsonObj[n.name] = n.value;
   });
   console.log(jsonObj)
   $.ajax({
@@ -754,7 +754,7 @@ function showAddFormCategory() {
     "  </div>\n" +
     "</form>" +
     "</div>";
-    document.getElementById("content").innerHTML = html;
+  document.getElementById("content").innerHTML = html;
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -762,7 +762,7 @@ function loadBrandManagerContent() {
   let html = `
         <div class="col-12" >
         <h2 style="text-align: center; margin-top: 20px" >Brand List</h2>
-        
+
         <h4 class="add-all" onclick="showAddFormBrand()">Add new brand</h4>
             <table class="table table-striped table-bordered">
               <thead style="background-color: #2cc1c1 !important;">
@@ -774,7 +774,7 @@ function loadBrandManagerContent() {
                 </tr>
               </thead>
               <tbody id="list-product">
-               
+
               </tbody>
             </table>
         </div>`;
@@ -799,9 +799,8 @@ function loadListBrand() {
                           <img src="${data.content[i].logo}" alt="" style="width: 150px">
                       </th>
                       <td>${data.content[i].name}</td>
-                      <td><Button class="btn btn-outline-danger" onclick="deleteBrand(${
-                        data.content[i].id
-                      },'${data.content[i].name}')">Del</Button>
+                      <td><Button class="btn btn-outline-danger" onclick="deleteBrand(${data.content[i].id
+            },'${data.content[i].name}')">Del</Button>
                       </td>
                     </tr>`;
         }
@@ -835,19 +834,19 @@ function addBrand() {
 }
 function deleteBrand(id, name) {
   if (confirm("Do you want to delete " + name + "???")) {
-     $.ajax({
-         headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-              "Authorization": "Basic " + btoa(username + ":" + password)
-         },
-         type: 'Delete',
-         url: API + '/brands/' + id,
-         success: loadBrandManagerContent,
-         error: function (error) {
-             console.log(error)
-         }
-     })
+    $.ajax({
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization": "Basic " + btoa(username + ":" + password)
+      },
+      type: 'Delete',
+      url: API + '/brands/' + id,
+      success: loadBrandManagerContent,
+      error: function (error) {
+        console.log(error)
+      }
+    })
   }
 }
 
@@ -875,14 +874,14 @@ function showAddFormBrand() {
     "  </div>\n" +
     "</form>" +
     "</div>";
-    document.getElementById("content").innerHTML = html;
+  document.getElementById("content").innerHTML = html;
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 function loadColorManagerContent() {
   let html = `
         <div class="col-12" >
-        <h2 style="text-align: center; margin-top: 20px" >Color List</h2>       
+        <h2 style="text-align: center; margin-top: 20px" >Color List</h2>
         <h4 class="add-all" onclick="showAddFormColor()">Add new color</h4>
             <table class="table table-striped table-bordered">
               <thead style="background-color: #2cc1c1 !important;">
@@ -893,7 +892,7 @@ function loadColorManagerContent() {
                 </tr>
               </thead>
               <tbody id="list-color">
-               
+
               </tbody>
             </table>
         </div>`;
@@ -918,9 +917,8 @@ function loadListColor() {
                           <td>
                           <button class="btn btn-outline-secondary mr-2" onclick="showEditColor('${data.content[i].id}')">Edit
                           </button>
-                          <Button class="btn btn-outline-danger" onclick="deleteColor(${
-                            data.content[i].id
-                          },'${data.content[i].name}')">Del</Button></td></tr>`;
+                          <Button class="btn btn-outline-danger" onclick="deleteColor(${data.content[i].id
+            },'${data.content[i].name}')">Del</Button></td></tr>`;
         }
       }
       document.getElementById("list-color").innerHTML = html1;
@@ -934,7 +932,7 @@ function loadListColor() {
 function addColor() {
   let formData = $("#frm-color").serializeArray();
   var jsonObj = {};
-  $.map( formData, function( n, i ) {
+  $.map(formData, function (n, i) {
     jsonObj[n.name] = n.value;
   });
   console.log(formData)
@@ -965,14 +963,14 @@ function showEditColor(id) {
       console.log(data)
       let html =
         "<div class='offset-3 col-6 mb-3'><h2 style=\"text-align: center\">Edit</h2>" +
-        "<form id='frm-colors'>" +        
+        "<form id='frm-colors'>" +
         '<div class="form-group row mt-4">\n' +
         '    <label for="name" class="col-sm-4 col-form-label">Name</label>\n' +
         '    <div class="col-sm-8">\n' +
         '      <input type="hidden" class="form-control" name="id" value=\'' +
-        data?.id +"'>\n" +
+        data?.id + "'>\n" +
         '      <input type="text" class="form-control" name="name" value=\'' +
-        data?.name +"'>\n" +
+        data?.name + "'>\n" +
         "    </div>\n" +
         "  </div>\n" +
         '  <div class="form-group row">\n' +
@@ -983,16 +981,16 @@ function showEditColor(id) {
         "  </div>\n" +
         "</form>" +
         "</div>";
-        document.getElementById("content").innerHTML = html;
+      document.getElementById("content").innerHTML = html;
     },
   });
 }
 function editColor(id) {
   let formData = $("#frm-colors").serializeArray();
   var jsonObj = {};
-  $.map( formData, function( n, i ) {
-     jsonObj[n.name] = n.value;
-     jsonObj[n.name] = n.value;
+  $.map(formData, function (n, i) {
+    jsonObj[n.name] = n.value;
+    jsonObj[n.name] = n.value;
   });
   console.log(jsonObj)
   $.ajax({
@@ -1012,19 +1010,19 @@ function editColor(id) {
 }
 function deleteColor(id, name) {
   if (confirm("Do you want to delete " + name + "???")) {
-     $.ajax({
-         headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-             "Authorization": "Basic " + btoa(username + ":" + password)
-         },
-         type: 'Delete',
-         url: API + '/colors/' + id,
-         success: loadColorManagerContent,
-         error: function (error) {
-             console.log(error)
-         }
-     })
+    $.ajax({
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization": "Basic " + btoa(username + ":" + password)
+      },
+      type: 'Delete',
+      url: API + '/colors/' + id,
+      success: loadColorManagerContent,
+      error: function (error) {
+        console.log(error)
+      }
+    })
   }
 }
 
@@ -1046,7 +1044,7 @@ function showAddFormColor() {
     "  </div>\n" +
     "</form>" +
     "</div>";
-    document.getElementById("content").innerHTML = html;
+  document.getElementById("content").innerHTML = html;
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -1054,7 +1052,7 @@ function loadSizeManagerContent() {
   let html = `
         <div class="col-12" >
         <h2 style="text-align: center; margin-top: 20px" >Size List</h2>
-        
+
         <h4 class="add-all" onclick="showAddFormSize()">Add new size</h4>
             <table class="table table-striped table-bordered">
               <thead style="background-color: #2cc1c1 !important;">
@@ -1065,7 +1063,7 @@ function loadSizeManagerContent() {
                 </tr>
               </thead>
               <tbody id="list-product">
-               
+
               </tbody>
             </table>
         </div>`;
@@ -1091,10 +1089,9 @@ function loadListSize() {
                     <td>
                     <button class="btn btn-outline-secondary mr-2" onclick="showEditSize('${data.content[i].id}')">Edit
                     </button>
-                    <Button class="btn btn-outline-danger" onclick="deleteSize(${
-                      data.content[i].id
-                    },'${data.content[i].name}')">Del</Button></td></tr>`;
-                  }
+                    <Button class="btn btn-outline-danger" onclick="deleteSize(${data.content[i].id
+            },'${data.content[i].name}')">Del</Button></td></tr>`;
+        }
       }
       document.getElementById("list-product").innerHTML = html1;
     },
@@ -1107,8 +1104,8 @@ function loadListSize() {
 function addSize() {
   let formData = $("#frm-size").serializeArray();
   var jsonObj = {};
-  $.map( formData, function( n, i ) {
-     jsonObj[n.name] = n.value;
+  $.map(formData, function (n, i) {
+    jsonObj[n.name] = n.value;
   });
   console.log(jsonObj)
   $.ajax({
@@ -1137,14 +1134,14 @@ function showEditSize(id) {
       console.log(data)
       let html =
         "<div class='offset-3 col-6 mb-3'><h2 style=\"text-align: center\">Edit</h2>" +
-        "<form id='frm-size'>" +        
+        "<form id='frm-size'>" +
         '<div class="form-group row mt-4">\n' +
         '    <label for="name" class="col-sm-4 col-form-label">Name</label>\n' +
         '    <div class="col-sm-8">\n' +
         '      <input type="hidden" class="form-control" name="id" value=\'' +
-        data?.id +"'>\n" +
+        data?.id + "'>\n" +
         '      <input type="text" class="form-control" name="name" value=\'' +
-        data?.name +"'>\n" +
+        data?.name + "'>\n" +
         "    </div>\n" +
         "  </div>\n" +
         '  <div class="form-group row">\n' +
@@ -1155,16 +1152,16 @@ function showEditSize(id) {
         "  </div>\n" +
         "</form>" +
         "</div>";
-        document.getElementById("content").innerHTML = html;
+      document.getElementById("content").innerHTML = html;
     },
   });
 }
 function editSize(id) {
   let formData = $("#frm-size").serializeArray();
   var jsonObj = {};
-  $.map( formData, function( n, i ) {
-     jsonObj[n.name] = n.value;
-     jsonObj[n.name] = n.value;
+  $.map(formData, function (n, i) {
+    jsonObj[n.name] = n.value;
+    jsonObj[n.name] = n.value;
   });
   console.log(jsonObj)
   $.ajax({
@@ -1184,19 +1181,19 @@ function editSize(id) {
 }
 function deleteSize(id, name) {
   if (confirm("Do you want to delete " + name + "???")) {
-     $.ajax({
-         headers: {
-             Accept: 'application/json',
-             'Content-Type': 'application/json',
-             "Authorization": "Basic " + btoa(username + ":" + password)
-         },
-         type: 'Delete',
-         url: API + '/sizes/' + id,
-         success: loadSizeManagerContent,
-         error: function (error) {
-             console.log(error)
-         }
-     })
+    $.ajax({
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization": "Basic " + btoa(username + ":" + password)
+      },
+      type: 'Delete',
+      url: API + '/sizes/' + id,
+      success: loadSizeManagerContent,
+      error: function (error) {
+        console.log(error)
+      }
+    })
   }
 }
 function showAddFormSize() {
@@ -1217,7 +1214,7 @@ function showAddFormSize() {
     "  </div>\n" +
     "</form>" +
     "</div>";
-    document.getElementById("content").innerHTML = html;
+  document.getElementById("content").innerHTML = html;
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -1239,7 +1236,7 @@ function loadODerManagerContent() {
                 </tr>
               </thead>
               <tbody id="list-order">
-               
+
               </tbody>
             </table>
         </div>`;
@@ -1266,9 +1263,8 @@ function loadListOrder() {
                           <td>${data.content[i].phone}</td>
                           <td>${data.content[i].address}</td>
                           <td><button class="btn btn-outline-secondary mr-2" onclick="showDetailOrder('${data.content[i].id}')">Detail</button>
-                          <Button class="btn btn-outline-danger" onclick="deleteOrder(${
-                            data.content[i].id
-                          },'${data.content[i].name}')">Del</Button></td></tr>`;
+                          <Button class="btn btn-outline-danger" onclick="deleteOrder(${data.content[i].id
+            },'${data.content[i].name}')">Del</Button></td></tr>`;
         }
       }
       document.getElementById("list-order").innerHTML = html1;
@@ -1340,30 +1336,30 @@ function showDetailOrder(id) {
         "    </div>\n" +
         "    </div>\n" +
         '  <div class="form-group row">\n' +
-        '    <div class="col-sm-12">\n' +  
+        '    <div class="col-sm-12">\n' +
         '     <table class="table table-striped table-bordered">' +
-        '     <thread style="background-color: #04AA6D !important;">'+
-          '     <tr>'+
-          '       <th> Image</th>'+
-          '       <th> Name</th>'+
-          '       <th> Price</th>'+
-          '       <th> Amount</th>'+
-          '       <th> TotalPrice</th>'+
-          '     </tr>'+
-          '     </thread>'+
-          '     <tbody id=product_detail>'+                  
-        '       </tbody>'+
-        '     </table>'+
+        '     <thread style="background-color: #04AA6D !important;">' +
+        '     <tr>' +
+        '       <th> Image</th>' +
+        '       <th> Name</th>' +
+        '       <th> Price</th>' +
+        '       <th> Amount</th>' +
+        '       <th> TotalPrice</th>' +
+        '     </tr>' +
+        '     </thread>' +
+        '     <tbody id=product_detail>' +
+        '       </tbody>' +
+        '     </table>' +
         "    </div>\n" +
         "    </div>\n" +
         "</form>" +
         "</div>";
-        document.getElementById("content").innerHTML = html;
-        
-        let htmlDetail ="";
-        if(data?.orderDetails != null){
-          for (let i = 0; i < data?.orderDetails.length; i++) {
-            htmlDetail += `<tr>
+      document.getElementById("content").innerHTML = html;
+
+      let htmlDetail = "";
+      if (data?.orderDetails != null) {
+        for (let i = 0; i < data?.orderDetails.length; i++) {
+          htmlDetail += `<tr>
                       <th>
                           <img src="${data?.orderDetails[i].product?.image}" alt="" style="width: 150px">
                       </th>
@@ -1372,10 +1368,10 @@ function showDetailOrder(id) {
                       <td>${data?.orderDetails[i].quantity}</td>
                       <td>${data?.orderDetails[i].totalPrice}</td>
                     </tr>`;
-          }
         }
-        
-        document.getElementById("product_detail").innerHTML = htmlDetail;
+      }
+
+      document.getElementById("product_detail").innerHTML = htmlDetail;
     },
   });
 }
@@ -1416,7 +1412,7 @@ function loadFeedbackManagerContent() {
                 </tr>
               </thead>
               <tbody id="list-feedback">
-               
+
               </tbody>
             </table>
         </div>`;
@@ -1435,15 +1431,14 @@ function loadListFeedback() {
       console.log(data.content)
       let html1 = "";
       for (let i = 0; i < data.content.length; i++) {
-          html1 += `<tr>
+        html1 += `<tr>
                       <td>${i + 1}</td>
                       <td>${data.content[i].name}</td>
                       <td>${data.content[i].email}</td>
                       <td>${data.content[i].phone}</td>
                       <td>${data.content[i].content}</td>
-                      <td><button class="btn btn-outline-secondary mr-2" onclick="showEditFeedback('${data.content[i].id}')">Detail</button><Button class="btn btn-outline-danger" onclick="deletFeeedback(${
-                        data.content[i].id
-                      },'${data.content[i].name}')">Del</Button></td></tr>`;
+                      <td><button class="btn btn-outline-secondary mr-2" onclick="showEditFeedback('${data.content[i].id}')">Detail</button><Button class="btn btn-outline-danger" onclick="deletFeeedback(${data.content[i].id
+          },'${data.content[i].name}')">Del</Button></td></tr>`;
       }
       document.getElementById("list-feedback").innerHTML = html1;
     },
@@ -1501,11 +1496,11 @@ function showEditFeedback(id) {
         '    <label for="score" class="col-sm-4 col-form-label">Content</label>\n' +
         '    <div class="col-sm-8">\n' +
         '      <input type="text" class="form-control" name="Content" value=\'' +
-        data?.content + 
+        data?.content +
         "'>\n" +
         "</form>" +
         "</div>";
-        document.getElementById("content").innerHTML = html;
+      document.getElementById("content").innerHTML = html;
     },
   });
 }
@@ -1516,7 +1511,7 @@ function showEditFeedback(id) {
 function loadUserManagerContent() {
   let html = `
         <div class="col-12" >
-        <h2 style="text-align: center; margin-top: 20px" >Users List</h2> 
+        <h2 style="text-align: center; margin-top: 20px" >Users List</h2>
             <table class="table table-striped table-bordered">
               <thead style="background-color:#2cc1c1 !important;">
                 <tr>
@@ -1529,7 +1524,7 @@ function loadUserManagerContent() {
                 </tr>
               </thead>
               <tbody id="list-user">
-               
+
               </tbody>
             </table>
         </div>`;
@@ -1556,9 +1551,8 @@ function loadListUsers() {
                           <td>${data.content[i].phone}</td>
                           <td>${data.content[i].address}</td>
                           <td>
-                          <Button class="btn btn-outline-danger" onclick="deletUser(${
-                            data.content[i].id
-                          },'${data.content[i].name}')">Del</Button></td></tr>`;
+                          <Button class="btn btn-outline-danger" onclick="deletUser(${data.content[i].id
+            },'${data.content[i].name}')">Del</Button></td></tr>`;
         }
       }
       document.getElementById("list-user").innerHTML = html1;
@@ -1591,26 +1585,6 @@ function showAddForm(name) {
     "  </div>\n" +
     "</form>" +
     "</div>";
-    document.getElementById("content").innerHTML = html;
-}
-function loadFEEDBACkManagerContent() {
-  let html = `
-        <div class="col-12" >
-        <h2 style="text-align: center; margin-top: 20px" >FEEDBACK</h2>
-            <table class="table table-striped table-bordered">
-              <thead style="background-color: #04AA6D !important;">
-                <tr>
-                  <th scope="col">Index</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody id="list-product">              
-              </tbody>
-            </table>
-        </div>`;
   document.getElementById("content").innerHTML = html;
-  loadListSize();
 }
-
 //------------------------------------------------------------------------------------------------------------------------------//
